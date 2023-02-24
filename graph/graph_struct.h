@@ -5,6 +5,7 @@
 #include <sstream> 
 #include <iostream>
 #include <list>
+#include <unordered_set>
 
 // 图的邻接表方法
 // 邻接表使用vector实现
