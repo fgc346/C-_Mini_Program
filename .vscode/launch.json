@@ -11,7 +11,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["/home/erma/Projects/C++_Mini_Program/graph/tinyG.txt", "0"],
+            "args": ["/home/erma/Projects/C++_Mini_Program/graph/tinyG_2.txt", "0"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
