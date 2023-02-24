@@ -1,16 +1,17 @@
 #include "graph_struct.h"
 #include <stack>
 
-template <typename T >
+// template <typename T >
 class DepthFirstPaths
 {
 public:
-    DepthFirstPaths(T G, int s)
+    DepthFirstPaths(GraphByUnorderSet G, int s)
     {
         marked_.assign(G.Vertex(), false);
         edgeTo_.assign(G.Vertex(), 0);
         s_ = s;
-        dfs(G, s);
+        // dfs(G, s);
+        dfs_non_recursion(G, s);
     }
     bool HasPathTo(int v)
     {
@@ -38,7 +39,7 @@ public:
         return path;
     }
 private:
-    void dfs(T G, int v)
+    void dfs(GraphByUnorderSet G, int v)
     {
         marked_[v] = true;
         for (auto u : G.Adj(v))
@@ -48,8 +49,52 @@ private:
                 edgeTo_[u] = v;
                 dfs(G, u);
             }
-
         }
+    }
+    void dfs_non_recursion(GraphByUnorderSet G, int s)
+    {
+        std::stack<int> st;
+        marked_[s] = true;
+        st.push(s);
+        while(!st.empty())
+        {
+            int pre = st.top();
+            std::cout << " pre : " << pre << std::endl;
+            // for (auto v : G.Adj(pre))
+            // {
+            //     std::cout << "  " << v;
+            // }
+            // std::cout << std::endl;
+            // // 遍历输出 uset 容器存储的所有元素
+            // std::unordered_set<int> uset(G.Adj(pre));
+            // for (auto iter = uset.begin(); iter != uset.end(); ++iter)
+            // {
+            //     std::cout << *iter << std::endl;
+            // }
+            // std::cout << std::endl;
+            // std::unordered_set<int>::iterator iter = (G.Adj(pre)).begin();
+            auto uset = G.Adj(pre);
+            // auto iter = G.Adj(pre).begin();
+            auto iter = uset.begin();
+            while(iter != G.Adj(pre).end())
+            {
+                auto v = *iter;
+                std::cout << " v = " << v << std::endl;
+                if (!marked_[v])
+                {
+                    marked_[v] = true;
+                    edgeTo_[v] = pre;
+                    st.push(v);
+                    break;
+                }
+                ++iter;
+            }
+            if (iter == G.Adj(pre).end())
+            {
+                st.pop();
+            }
+        }
+
     }
 private:
     std::vector<bool> marked_;  //这个顶点上调用过dfs()了吗
