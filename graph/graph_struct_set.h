@@ -70,7 +70,7 @@ public:
         adj_[v].insert(u);     // 将u加入到v的链表中
         ++e_;
     }
-    std::unordered_set<int> Adj(int v)
+    std::unordered_set<int>& Adj(int v)
     {
         return adj_[v];
     }

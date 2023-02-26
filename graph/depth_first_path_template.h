@@ -1,17 +1,18 @@
 #include "graph_struct.h"
 #include <stack>
 
-// template <typename T >
+template <typename T >
 class DepthFirstPaths
 {
 public:
-    DepthFirstPaths(GraphByUnorderSet G, int s)
+    DepthFirstPaths(T G, int s)
     {
         marked_.assign(G.Vertex(), false);
         edgeTo_.assign(G.Vertex(), 0);
         s_ = s;
         // dfs(G, s);
-        dfs_non_recursion(G, s);
+        // dfs_non_recursion(G, s);
+        dfs_non_recursion_2(G,s);
     }
     bool HasPathTo(int v)
     {
@@ -39,7 +40,7 @@ public:
         return path;
     }
 private:
-    void dfs(GraphByUnorderSet G, int v)
+    void dfs(T G, int v)
     {
         marked_[v] = true;
         for (auto u : G.Adj(v))
@@ -51,7 +52,7 @@ private:
             }
         }
     }
-    void dfs_non_recursion(GraphByUnorderSet G, int s)
+    void dfs_non_recursion(T G, int s)
     {
         std::stack<int> st;
         marked_[s] = true;
@@ -73,9 +74,9 @@ private:
             // }
             // std::cout << std::endl;
             // std::unordered_set<int>::iterator iter = (G.Adj(pre)).begin();
-            auto uset = G.Adj(pre);
+            // auto uset = G.Adj(pre);
             // auto iter = G.Adj(pre).begin();
-            auto iter = uset.begin();
+            auto iter = G.Adj(pre).begin();
             while(iter != G.Adj(pre).end())
             {
                 auto v = *iter;
@@ -95,6 +96,32 @@ private:
             }
         }
 
+    }
+
+    void dfs_non_recursion_2(T G, int s)
+    {
+        std::stack<int> st;
+        marked_[s] = true;
+        st.push(s);
+        std::cout << " the node " << s << " push into stack" << std::endl;
+        while(!st.empty())
+        {
+            //当前节点出栈
+            auto curr = st.top();
+            st.pop();
+            std::cout << " the node " << curr << " from stack pop" << std::endl;
+            //对当前节点的子节点，从后往前入栈
+            for (auto iter = G.Adj(curr).begin(); iter != G.Adj(curr).end(); ++iter)
+            {
+                if (!marked_[*iter])
+                {
+                    marked_[*iter] = true;
+                    edgeTo_[*iter] = curr;
+                    st.push(*iter);
+                    std::cout << " the node " << *iter << " push into stack" << std::endl;
+                }
+            }
+        }
     }
 private:
     std::vector<bool> marked_;  //这个顶点上调用过dfs()了吗

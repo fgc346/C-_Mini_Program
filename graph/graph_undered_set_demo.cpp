@@ -21,8 +21,8 @@ int main(int argc,char* argv[])
   srcFile.close();
   std::cout << graph_1.ToString();
 
-  // DepthFirstPaths<GraphByUnorderSet> dfs_path(graph_1, s);
-  DepthFirstPaths dfs_path(graph_1, s);
+  DepthFirstPaths<GraphByUnorderSet> dfs_path(graph_1, s);
+  // DepthFirstPaths dfs_path(graph_1, s);
   std::cout << "0-1: " << dfs_path.HasPathTo(1);
   std::cout << " dfs paths: " << std::endl;
   PrintGraphPath(graph_1, dfs_path, s);
