@@ -1,3 +1,4 @@
+# build 使用模糊搜索，会忽略根目录下所有的build文件夹
 build/
 build*/
 CMakeLists.txt.user*
